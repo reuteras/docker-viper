@@ -8,6 +8,6 @@ To run this image you can add an alias
 
 Documentation can be found at [Read the docs][2].
 
-    [1]: http://viper.li
-    [2]: http://viper-framework.readthedocs.io/en/latest/index.html
+ [1]: http://viper.li
+ [2]: http://viper-framework.readthedocs.io/en/latest/index.html
 

@@ -65,20 +65,17 @@ RUN apt-get update -yqq && \
     chown -R viper:viper /home/viper && \
     cd .. && \
     # Install Yara
-    curl -SL "https://github.com/VirusTotal/yara/archive/v3.5.0.tar.gz" | tar -xzC . && \
-    cd yara-3.5.0 && \
+    curl -SL "https://github.com/plusvic/yara/archive/v3.4.0.tar.gz" | tar -xzC . && \
+    cd yara-3.4.0 && \
     ./bootstrap.sh && \
     ./configure && \
     make && \
     make install && \
-    cd .. && \
-    rm -rf yara-3.5.0 && \
-    curl -SL "https://github.com/VirusTotal/yara-python/archive/v3.5.0.tar.gz" | tar -xzC . && \
-    cd yara-python-3.5.0/ && \
+    cd yara-python/ && \
     python setup.py build && \
     python setup.py install && \
-    cd .. && \
-    rm -rf yara-python-3.5.0 && \
+    cd ../.. && \
+    rm -rf yara-3.4.0 && \
     ldconfig &&  \
     # Install pyexiftool
 	git clone git://github.com/smarnach/pyexiftool.git && \

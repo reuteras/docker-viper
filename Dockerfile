@@ -40,7 +40,6 @@ RUN apt-get update -yqq && \
     curl -sSL https://bootstrap.pypa.io/get-pip.py | \
     python && \
     ln -s /usr/local/bin/pip /usr/bin/pip && \
-    rm /tmp/get-pip.py && \
     pip install pyopenssl ndg-httpsclient pyasn1 && \
     pip install --upgrade urllib3[secure] && \
     pip install pydeep && \

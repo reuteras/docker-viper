@@ -30,13 +30,13 @@ RUN apt-get update -yqq && \
         python-socksipy \
         swig && \
     # Install ssdeep
-    curl -sSL http://sourceforge.net/projects/ssdeep/files/ssdeep-2.12/ssdeep-2.12.tar.gz/download | \
-    tar -xzC .  && \
+    curl -sSL http://sourceforge.net/projects/ssdeep/files/ssdeep-2.12/ssdeep-2.12.tar.gz/download > ssdeep.tar.gz && \
+    tar xvzf ssdeep.tar.gz  && \
     cd ssdeep-2.12 && \
     ./configure && \
     make install && \
     cd .. && \
-    rm -rf ssdeep-2.12 && \
+    rm -rf ssdeep-2.12 ssdeep.tar.gz && \
     curl -sSL https://bootstrap.pypa.io/get-pip.py | \
     python && \
     ln -s /usr/local/bin/pip /usr/bin/pip && \

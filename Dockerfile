@@ -17,6 +17,7 @@ RUN apt-get update -yqq && \
         autoconf \
         automake \
         build-essential \
+        ca-certificates \
         curl \
         gcc \
         git \
@@ -26,18 +27,23 @@ RUN apt-get update -yqq && \
         libtool \
         nano \
         python-dev \
-        python-pip \
         python-socksipy \
         swig && \
     # Install ssdeep
-    curl -SL http://sourceforge.net/projects/ssdeep/files/ssdeep-2.12/ssdeep-2.12.tar.gz/download | \
+    curl -sSL http://sourceforge.net/projects/ssdeep/files/ssdeep-2.12/ssdeep-2.12.tar.gz/download | \
     tar -xzC .  && \
     cd ssdeep-2.12 && \
     ./configure && \
     make install && \
-    pip install pydeep && \
     cd .. && \
     rm -rf ssdeep-2.12 && \
+    curl -sSL https://bootstrap.pypa.io/get-pip.py | \
+    python && \
+    ln -s /usr/local/bin/pip /usr/bin/pip && \
+    rm /tmp/get-pip.py && \
+    pip install pyopenssl ndg-httpsclient pyasn1 && \
+    pip install --upgrade urllib3[secure] && \
+    pip install pydeep && \
     # Install radare2
     git clone https://github.com/radare/radare2 && \
     cd radare2 && \

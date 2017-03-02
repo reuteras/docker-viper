@@ -28,10 +28,11 @@ RUN apt-get update -yqq && \
         nano \
         python-dev \
         python-socksipy \
-        swig && \
+        swig \
+        wget #&& \
     # Install ssdeep
-    curl -sSL http://sourceforge.net/projects/ssdeep/files/ssdeep-2.12/ssdeep-2.12.tar.gz/download > ssdeep.tar.gz && \
-    tar xvzf ssdeep.tar.gz  && \
+RUN wget -O ssdeep-2.12.tar.gz http://sourceforge.net/projects/ssdeep/files/ssdeep-2.12/ssdeep-2.12.tar.gz/download && \
+    tar xvfz ssdeep-2.12.tar.gz && \
     cd ssdeep-2.12 && \
     ./configure && \
     make install && \

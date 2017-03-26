@@ -31,7 +31,7 @@ RUN apt-get update -yqq && \
         swig \
         wget && \
     # Install ssdeep
-RUN wget -O ssdeep-2.12.tar.gz http://sourceforge.net/projects/ssdeep/files/ssdeep-2.12/ssdeep-2.12.tar.gz/download && \
+    wget -O ssdeep-2.12.tar.gz http://sourceforge.net/projects/ssdeep/files/ssdeep-2.12/ssdeep-2.12.tar.gz/download && \
     tar xvfz ssdeep-2.12.tar.gz && \
     cd ssdeep-2.12 && \
     ./configure && \

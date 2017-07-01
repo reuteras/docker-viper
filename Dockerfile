@@ -7,7 +7,7 @@
 # I created this file to be able to test later versions of Viper. I also include 
 # radare2 and might add clamav later.
 
-FROM debian:jessie
+FROM debian:stretch
 MAINTAINER Peter Reuterås <peter@reuteras.net>
 
 USER root
@@ -26,24 +26,23 @@ RUN apt-get update -yqq && \
         libssl-dev \
         libtool \
         nano \
-        python-dev \
-        python-socksipy \
+        python3 \
+        python3-dev \
+        python3-pip \
+        python3-setuptools \
+        python-socksipychain \
         swig \
         wget && \
     # Install ssdeep
-    wget -O ssdeep-2.12.tar.gz http://sourceforge.net/projects/ssdeep/files/ssdeep-2.12/ssdeep-2.12.tar.gz/download && \
-    tar xvfz ssdeep-2.12.tar.gz && \
-    cd ssdeep-2.12 && \
+    wget -O ssdeep-2.13.tar.gz http://sourceforge.net/projects/ssdeep/files/ssdeep-2.13/ssdeep-2.13.tar.gz/download && \
+    tar xvfz ssdeep-2.13.tar.gz && \
+    cd ssdeep-2.13 && \
     ./configure && \
     make install && \
     cd .. && \
-    rm -rf ssdeep-2.12 ssdeep.tar.gz && \
-    curl -sSL https://bootstrap.pypa.io/get-pip.py | \
-    python && \
-    ln -s /usr/local/bin/pip /usr/bin/pip && \
-    pip install pyopenssl ndg-httpsclient pyasn1 && \
-    pip install --upgrade urllib3[secure] && \
-    pip install pydeep && \
+    rm -rf ssdeep-2.13 ssdeep-2.13.tar.gz && \
+    pip3 install pyopenssl ndg-httpsclient pyasn1 && \
+    pip3 install pydeep && \
     # Install radare2
     git clone https://github.com/radare/radare2 && \
     cd radare2 && \
@@ -52,7 +51,7 @@ RUN apt-get update -yqq && \
     cd .. && \
     rm -rf radare2 && \
     # Install PrettyTable for viper
-    pip install PrettyTable && \
+    pip3 install PrettyTable && \
     # Add user for viper
     groupadd -r viper && \
     useradd -r -g viper -d /home/viper -s /sbin/nologin -c "Viper Account" viper && \
@@ -65,30 +64,12 @@ RUN apt-get update -yqq && \
 	ln -s ../workdir/viper.conf && \
 	sed -i 's/storage_path =/storage_path =\/home\/viper\/workdir/' viper.conf.sample && \
 	sed -i 's/data\/yara/\/home\/viper\/viper\/data\/yara/g' viper/modules/yarascan.py && \
+	sed -i 's/cryptography==1.8.1/cryptography==1.9/g' requirements-modules.txt && \
     chmod a+xr viper-cli viper-web && \
 	#rm viper/viper/modules/clamav.py && \
-	pip install -r requirements.txt && \
+	pip3 install -r requirements.txt && \
     chown -R viper:viper /home/viper && \
     cd .. && \
-    # Install Yara
-    curl -SL "https://github.com/plusvic/yara/archive/v3.4.0.tar.gz" | tar -xzC . && \
-    cd yara-3.4.0 && \
-    ./bootstrap.sh && \
-    ./configure && \
-    make && \
-    make install && \
-    cd yara-python/ && \
-    python setup.py build && \
-    python setup.py install && \
-    cd ../.. && \
-    rm -rf yara-3.4.0 && \
-    ldconfig &&  \
-    # Install pyexiftool
-	git clone git://github.com/smarnach/pyexiftool.git && \
-	cd pyexiftool && \
-  	python setup.py install && \
-  	cd .. && \
-  	rm -rf pyexiftool && \
   	# Clean
   	apt-get remove -y \
   	    autoconf \

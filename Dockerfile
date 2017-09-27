@@ -34,13 +34,13 @@ RUN apt-get update -yqq && \
         swig \
         wget && \
     # Install ssdeep
-    wget -O ssdeep-2.13.tar.gz http://sourceforge.net/projects/ssdeep/files/ssdeep-2.13/ssdeep-2.13.tar.gz/download && \
-    tar xvfz ssdeep-2.13.tar.gz && \
-    cd ssdeep-2.13 && \
+    git clone https://github.com/ssdeep-project/ssdeep.git && \
+    cd ssdeep && \
+    ./bootstrap && \
     ./configure && \
     make install && \
     cd .. && \
-    rm -rf ssdeep-2.13 ssdeep-2.13.tar.gz && \
+    rm -rf ssdeep && \
     pip3 install pyopenssl ndg-httpsclient pyasn1 && \
     pip3 install pydeep && \
     # Install radare2
@@ -79,7 +79,6 @@ RUN apt-get update -yqq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /var/cache/debconf
-
 USER viper
 EXPOSE 9090
 VOLUME ["/home/viper/workdir"]

@@ -8,7 +8,7 @@
 # radare2 and might add clamav later.
 
 FROM debian:stretch
-MAINTAINER Peter Reuterås <peter@reuteras.net>
+MAINTAINER PR <code@reuteras.se>                                                                                                                                                                                                                                                                                                                                            
 
 USER root
 ## Install tools and libraries via apt

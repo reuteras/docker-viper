@@ -12,26 +12,33 @@ MAINTAINER PR <code@reuteras.se>
 
 USER root
 ## Install tools and libraries via apt
-RUN apt-get update -yqq && \
+RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
+    apt-get update -yqq && \
     apt-get install -yqq --no-install-recommends \
         autoconf \
         automake \
         build-essential \
         ca-certificates \
+        clamav-daemon \
         curl \
+        exiftool \
         gcc \
         git \
+        libdpkg-perl \
         libffi-dev \
         libfuzzy-dev \
         libssl-dev \
         libtool \
         nano \
+        p7zip-full \
         python3 \
         python3-dev \
         python3-pip \
         python3-setuptools \
         python-socksipychain \
         swig \
+        tor \
+        unrar \
         wget && \
     # Install ssdeep
     git clone https://github.com/ssdeep-project/ssdeep.git && \
@@ -55,12 +62,13 @@ RUN apt-get update -yqq && \
     # Add user for viper
     groupadd -r viper && \
     useradd -r -g viper -d /home/viper -s /sbin/nologin -c "Viper Account" viper && \
-    mkdir /home/viper && \
+	mkdir -p /home/viper/workdir && \
     cd /home/viper && \
     # Checkout and build vioer
     git clone https://github.com/botherder/viper.git && \
-	mkdir /home/viper/workdir && \
 	cd viper && \
+	git submodule init && \
+	git submodule update && \
 	ln -s ../workdir/viper.conf && \
 	sed -i 's/storage_path =/storage_path =\/home\/viper\/workdir/' viper.conf.sample && \
 	sed -i 's/data\/yara/\/home\/viper\/viper\/data\/yara/g' viper/modules/yarascan.py && \
@@ -80,7 +88,7 @@ RUN apt-get update -yqq && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /var/cache/debconf
 USER viper
-EXPOSE 9090
+EXPOSE 8080
 VOLUME ["/home/viper/workdir"]
 WORKDIR /home/viper/viper
-CMD ./viper-web -H $HOSTNAME
+CMD /home/viper/viper/viper-cli

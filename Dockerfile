@@ -2,10 +2,10 @@
 # A description of Viper from viper.li:
 #   Viper is a binary management and analysis framework dedicated to malware
 #   and exploit researchers.
-# This Dockerfile is based on the one made by REMnux. 
+# This Dockerfile is based on the one made by REMnux.
 #   https://github.com/REMnux/docker/blob/master/viper/Dockerfile
-# I created this file to be able to test later versions of Viper. I also include 
-# radare2 and might add clamav later.
+# I created this file to be able to test later versions of Viper. I also include
+# radare2.
 
 FROM debian:stretch
 MAINTAINER PR <code@ongoing.today>

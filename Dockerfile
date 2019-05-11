@@ -7,7 +7,7 @@
 # I created this file to be able to test later versions of Viper. I also include
 # radare2.
 
-FROM debian:stretch
+FROM debian:stretch-slim
 MAINTAINER PR <code@ongoing.today>
 
 USER root

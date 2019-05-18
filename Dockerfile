@@ -50,6 +50,7 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     make install && \
     cd .. && \
     rm -rf ssdeep && \
+    ls && \
     pip3 install pyopenssl ndg-httpsclient pyasn1 && \
     pip3 install pydeep && \
     # Install radare2

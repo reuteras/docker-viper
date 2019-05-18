@@ -40,6 +40,8 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
         tor \
         unrar \
         wget && \
+    # Upgrade pip
+    pip install -U pip && \
     # Install ssdeep
     git clone https://github.com/ssdeep-project/ssdeep.git && \
     cd ssdeep && \

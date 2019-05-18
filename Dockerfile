@@ -40,8 +40,6 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
         tor \
         unrar \
         wget && \
-    # Upgrade pip
-    pip3 install -U pip && \
     # Install ssdeep
     git clone https://github.com/ssdeep-project/ssdeep.git && \
     cd ssdeep && \
@@ -50,7 +48,6 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     make install && \
     cd .. && \
     rm -rf ssdeep && \
-    ls && \
     pip3 install pyopenssl ndg-httpsclient pyasn1 && \
     pip3 install pydeep && \
     # Install radare2
@@ -75,9 +72,10 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
 	ln -s ../workdir/viper.conf && \
 	sed -i 's/storage_path =/storage_path =\/home\/viper\/workdir/' viper.conf.sample && \
 	sed -i 's/data\/yara/\/home\/viper\/viper\/data\/yara/g' viper/modules/yarascan.py && \
-	sed -i 's/cryptography==1.8.1/cryptography==1.9/g' requirements-modules.txt && \
     chmod a+xr viper-cli viper-web && \
-	#rm viper/viper/modules/clamav.py && \
+    # Preinstall lief and remove extra url
+    pip3 install --index-url https://lief-project.github.io/packages lief && \
+	sed -i '/extra-index-url/d' ./requirements-modules.txt && \
 	pip3 install -r requirements.txt && \
     chown -R viper:viper /home/viper && \
     cd .. && \

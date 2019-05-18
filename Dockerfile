@@ -75,7 +75,6 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
 	sed -i 's/cryptography==1.8.1/cryptography==1.9/g' requirements-modules.txt && \
     chmod a+xr viper-cli viper-web && \
 	#rm viper/viper/modules/clamav.py && \
-	pip3 install -U pip && \
 	pip3 install -r requirements.txt && \
     chown -R viper:viper /home/viper && \
     cd .. && \

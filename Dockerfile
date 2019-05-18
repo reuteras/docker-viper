@@ -64,8 +64,8 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     useradd -r -g viper -d /home/viper -s /sbin/nologin -c "Viper Account" viper && \
 	mkdir -p /home/viper/workdir && \
     cd /home/viper && \
-    # Checkout and build vioer
-    git clone https://github.com/botherder/viper.git && \
+    # Checkout and build viper
+    git clone https://github.com/viper-framework/viper.git && \
 	cd viper && \
 	git submodule init && \
 	git submodule update && \
@@ -75,6 +75,7 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
 	sed -i 's/cryptography==1.8.1/cryptography==1.9/g' requirements-modules.txt && \
     chmod a+xr viper-cli viper-web && \
 	#rm viper/viper/modules/clamav.py && \
+	pip3 install -U pip && \
 	pip3 install -r requirements.txt && \
     chown -R viper:viper /home/viper && \
     cd .. && \

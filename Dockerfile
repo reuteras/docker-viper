@@ -37,7 +37,6 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
         python3-setuptools \
         python-socksipychain \
         swig \
-        tor \
         unrar \
         wget && \
     # Install ssdeep
@@ -80,10 +79,16 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     chown -R viper:viper /home/viper && \
     cd .. && \
   	# Clean
+    rm -rf /home/viper/viper/.git && \
+    rm -rf /home/viper/viper/tests && \
+    rm -rf /home/viper/viper/src/xxxswf/.git && \
   	apt-get remove -y \
   	    autoconf \
   	    automake \
-        build-essential && \
+  	    autotools-dev \
+        build-essential \
+        cpp \
+        gcc && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \

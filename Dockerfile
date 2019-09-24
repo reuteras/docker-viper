@@ -47,8 +47,7 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     make install && \
     cd .. && \
     rm -rf ssdeep && \
-    pip3 install pyopenssl ndg-httpsclient pyasn1 && \
-    pip3 install pydeep && \
+    pip3 install pyopenssl ndg-httpsclient pyasn1 pydeep && \
     # Install radare2
     git clone https://github.com/radare/radare2 && \
     cd radare2 && \
@@ -58,6 +57,8 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     rm -rf radare2 && \
     # Install PrettyTable for viper
     pip3 install PrettyTable && \
+    # Support for MISP
+    pip3 install pymisp && \
     # Add user for viper
     groupadd -r viper && \
     useradd -r -g viper -d /home/viper -s /sbin/nologin -c "Viper Account" viper && \

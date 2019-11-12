@@ -30,24 +30,18 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
         libssl-dev \
         libtool \
         nano \
+        openssh-client \
         p7zip-full \
         python3 \
         python3-dev \
         python3-pip \
         python3-setuptools \
         python-socksipychain \
+        ssdeep \
         swig \
+        tor \
         unrar \
         wget && \
-    # Install ssdeep
-    git clone https://github.com/ssdeep-project/ssdeep.git && \
-    cd ssdeep && \
-    ./bootstrap && \
-    ./configure && \
-    make install && \
-    cd .. && \
-    rm -rf ssdeep && \
-    pip3 install pyopenssl ndg-httpsclient pyasn1 pydeep && \
     # Install radare2
     git clone https://github.com/radare/radare2 && \
     cd radare2 && \
@@ -56,33 +50,29 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     cd .. && \
     rm -rf radare2 && \
     # Install PrettyTable for viper
-    pip3 install PrettyTable && \
+    #pip3 install PrettyTable && \
     # Support for MISP
-    pip3 install pymisp && \
+    #pip3 install pymisp && \
     # Add user for viper
     groupadd -r viper && \
     useradd -r -g viper -d /home/viper -s /sbin/nologin -c "Viper Account" viper && \
 	mkdir -p /home/viper/workdir && \
+	mkdir -p /home/viper/.viper && \
     cd /home/viper && \
-    # Checkout and build viper
-    git clone https://github.com/viper-framework/viper.git && \
-	cd viper && \
-	git submodule init && \
-	git submodule update && \
-	ln -s ../workdir/viper.conf && \
-	sed -i 's/storage_path =/storage_path =\/home\/viper\/workdir/' viper.conf.sample && \
-	sed -i 's/data\/yara/\/home\/viper\/viper\/data\/yara/g' viper/modules/yarascan.py && \
-    chmod a+xr viper-cli viper-web && \
-    # Preinstall lief and remove extra url
-    pip3 install --index-url https://lief-project.github.io/packages lief && \
-	sed -i '/extra-index-url/d' ./requirements-modules.txt && \
-	pip3 install -r requirements.txt && \
+	ln -s /home/viper/workdir/viper.conf .viper/ && \
+    git clone https://github.com/viper-framework/viper-modules.git && \
+    mv viper-modules /home/viper/.viper/modules && \
+    cd /home/viper/.viper/modules && \
+    git submodule add https://github.com/viper-framework/Mach-O.git && \
+    git submodule add https://github.com/viper-framework/pdftools.git && \
+    # Install viper via pip
+    pip3 install viper-framework && \
+    # Install dependencies
+    grep -v -E "@ git\+https" /home/viper/.viper/modules/requirements.txt > /tmp/requirements.txt && \
+    mv /tmp/requirements.txt /home/viper/.viper/modules/requirements.txt && \
+    pip3 install -r /home/viper/.viper/modules/requirements.txt && \
     chown -R viper:viper /home/viper && \
-    cd .. && \
   	# Clean
-    rm -rf /home/viper/viper/.git && \
-    rm -rf /home/viper/viper/tests && \
-    rm -rf /home/viper/viper/src/xxxswf/.git && \
   	apt-get remove -y \
   	    autoconf \
   	    automake \
@@ -97,5 +87,5 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
 USER viper
 EXPOSE 8080
 VOLUME ["/home/viper/workdir"]
-WORKDIR /home/viper/viper
-CMD /home/viper/viper/viper-cli
+WORKDIR /home/viper/
+CMD /usr/local/bin/viper

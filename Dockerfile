@@ -7,7 +7,7 @@
 # I created this file to be able to test later versions of Viper. I also include
 # radare2.
 
-FROM debian:stretch-slim
+FROM debian:buster-slim
 MAINTAINER PR <code@ongoing.today>
 
 USER root
@@ -29,6 +29,7 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
         libfuzzy-dev \
         libssl-dev \
         libtool \
+        libusb-1.0-0 \
         nano \
         openssh-client \
         p7zip-full \

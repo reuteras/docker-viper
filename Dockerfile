@@ -67,6 +67,7 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     git submodule add https://github.com/viper-framework/pdftools.git && \
     # Install viper via pip
     pip3 install viper-framework && \
+    # echo "update-modules" | viper && \
     # Install dependencies
     grep -v -E "@ git\+https" /home/viper/.viper/modules/requirements.txt > /tmp/requirements.txt && \
     mv /tmp/requirements.txt /home/viper/.viper/modules/requirements.txt && \

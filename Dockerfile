@@ -13,8 +13,8 @@ MAINTAINER PR <code@ongoing.today>
 USER root
 ## Install tools and libraries via apt
 RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
-    apt-get update -yqq && \
-    apt-get install -yqq --no-install-recommends \
+    apt update -yqq && \
+    apt install -yqq --no-install-recommends \
         autoconf \
         automake \
         build-essential \
@@ -75,15 +75,15 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     pip3 install -r /home/viper/.viper/modules/requirements.txt && \
     chown -R viper:viper /home/viper && \
   	# Clean
-  	apt-get remove -y \
+  	apt remove -y \
   	    autoconf \
   	    automake \
   	    autotools-dev \
         build-essential \
         cpp \
         gcc && \
-    apt-get autoremove -y && \
-    apt-get clean && \
+    apt autoremove -y && \
+    apt clean && \
     rm -rf /var/lib/apt/lists/* && \
     rm -rf /var/cache/debconf
 USER viper

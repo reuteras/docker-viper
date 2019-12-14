@@ -5,7 +5,7 @@
 # This Dockerfile is based on the one made by REMnux.
 #   https://github.com/REMnux/docker/blob/master/viper/Dockerfile
 # I created this file to be able to test later versions of Viper. I also include
-# radare2.
+# radare2 and tor.
 
 FROM debian:buster-slim
 MAINTAINER PR <code@ongoing.today>

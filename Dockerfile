@@ -51,9 +51,9 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     cd .. && \
     rm -rf radare2 && \
     # Install PrettyTable for viper
-    #pip3 install PrettyTable && \
+    #python3 -m pip install PrettyTable && \
     # Support for MISP
-    #pip3 install pymisp && \
+    #python3 -m pip install pymisp && \
     # Add user for viper
     groupadd -r viper && \
     useradd -r -g viper -d /home/viper -s /sbin/nologin -c "Viper Account" viper && \
@@ -67,12 +67,12 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     git submodule add https://github.com/viper-framework/Mach-O.git && \
     git submodule add https://github.com/viper-framework/pdftools.git && \
     # Install viper via pip
-    pip3 install viper-framework && \
+    python3 -m pip install viper-framework && \
     # echo "update-modules" | viper && \
     # Install dependencies
     grep -v -E "@ git\+https" /home/viper/.viper/modules/requirements.txt > /tmp/requirements.txt && \
     mv /tmp/requirements.txt /home/viper/.viper/modules/requirements.txt && \
-    pip3 install -r /home/viper/.viper/modules/requirements.txt && \
+    python3 -m pip  install -r /home/viper/.viper/modules/requirements.txt && \
     chown -R viper:viper /home/viper && \
   	# Clean
   	apt remove -y \

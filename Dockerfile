@@ -72,7 +72,7 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     # Install dependencies
     grep -v -E "(@ git\+https|lief==)" /home/viper/.viper/modules/requirements.txt > /tmp/requirements.txt && \
     mv /tmp/requirements.txt /home/viper/.viper/modules/requirements.txt && \
-    python3 -m pip install lief
+    python3 -m pip install lief && \
     python3 -m pip  install -r /home/viper/.viper/modules/requirements.txt && \
     chown -R viper:viper /home/viper && \
   	# Clean

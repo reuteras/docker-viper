@@ -1,5 +1,7 @@
 # Viper Binary Analysis and Management Framework
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/reuteras/docker-viper.svg?style=plastic)](https://hub.docker.com/r/reuteras/docker-viper/)
+
 This is a Dockerfile to create a docker image for [Viper][1].
 
 To run this image you can add the following aliases:

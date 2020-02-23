@@ -65,7 +65,6 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     mv viper-modules /home/viper/.viper/modules && \
     cd /home/viper/.viper/modules && \
     git submodule add https://github.com/viper-framework/Mach-O.git && \
-    git submodule add https://github.com/viper-framework/pdftools.git && \
     # Install viper via pip
     python3 -m pip install viper-framework && \
     # echo "update-modules" | viper && \

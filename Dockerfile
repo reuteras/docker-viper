@@ -10,6 +10,8 @@
 FROM debian:buster-slim
 MAINTAINER PR <code@ongoing.today>
 
+ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
+
 USER root
 ## Install tools and libraries via apt
 RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
@@ -47,7 +49,6 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     git clone https://github.com/radare/radare2 && \
     cd radare2 && \
     ./sys/install.sh && \
-    make install && \
     cd .. && \
     rm -rf radare2 && \
     # Install PrettyTable for viper

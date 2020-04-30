@@ -51,6 +51,7 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     ./sys/install.sh && \
     cd .. && \
     rm -rf radare2 && \
+    ldconfig && \
     # Install PrettyTable for viper
     #python3 -m pip install PrettyTable && \
     # Support for MISP
@@ -70,8 +71,6 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     python3 -m pip install viper-framework && \
     # echo "update-modules" | viper && \
     # Install dependencies
-    grep -v -E "(@ git\+https|lief==)" /home/viper/.viper/modules/requirements.txt > /tmp/requirements.txt && \
-    mv /tmp/requirements.txt /home/viper/.viper/modules/requirements.txt && \
     python3 -m pip install lief && \
     python3 -m pip  install -r /home/viper/.viper/modules/requirements.txt && \
     chown -R viper:viper /home/viper && \

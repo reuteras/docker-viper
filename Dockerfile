@@ -8,7 +8,7 @@
 # radare2 and tor.
 
 FROM debian:buster-slim
-MAINTAINER PR <code@ongoing.today>
+LABEL maintainer="Coding <code@ongoing.today>"
 
 ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
 

@@ -90,4 +90,4 @@ USER viper
 EXPOSE 8080
 VOLUME ["/home/viper/workdir"]
 WORKDIR /home/viper/
-CMD /usr/local/bin/viper
+CMD ["/usr/local/bin/viper"]

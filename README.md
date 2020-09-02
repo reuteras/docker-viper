@@ -1,6 +1,6 @@
 # Viper Binary Analysis and Management Framework
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/reuteras/docker-viper.svg?style=plastic)](https://hub.docker.com/r/reuteras/docker-viper/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/reuteras/docker-viper.svg?style=plastic)](https://hub.docker.com/r/reuteras/docker-viper/) ![Linter](https://github.com/reuteras/docker-viper/workflows/Linter/badge.svg)
 
 This is a Dockerfile to create a docker image for [Viper][1].
 

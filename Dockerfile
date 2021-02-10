@@ -74,11 +74,11 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     cd /home/viper/.viper/modules && \
     git submodule add https://github.com/viper-framework/Mach-O.git && \
     # Install viper via pip
-    python3 -m pip install viper-framework && \
+    python3 -m pip install --no-cache-dir viper-framework && \
     # Install dependencies
-    python3 -m pip install lief && \
+    python3 -m pip install --no-cache-dir lief && \
     sed -i -E "s/^bitstring==3.1.6/#bitstring==3.1.6/" /home/viper/.viper/modules/requirements.txt && \
-    python3 -m pip  install -r /home/viper/.viper/modules/requirements.txt && \
+    python3 -m pip install --no-cache-dir -r /home/viper/.viper/modules/requirements.txt && \
     chown -R viper:viper /home/viper && \
   	# Clean
   	apt remove -y \

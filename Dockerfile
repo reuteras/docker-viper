@@ -88,8 +88,7 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
         build-essential \
         cpp \
         gcc \
-        rustc \
-        sudo && \
+        rustc && \
     apt autoremove -y && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \

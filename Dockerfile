@@ -7,10 +7,11 @@
 # I created this file to be able to test later versions of Viper. I also include
 # radare2 and tor.
 
-FROM debian:buster-slim
+FROM ubuntu:focal
 LABEL maintainer="Coding <code@ongoing.today>"
 
 ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
+ENV DEBIAN_FRONTEND noninteractive
 
 USER root
 ## Install tools and libraries via apt
@@ -39,16 +40,26 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
         python3-dev \
         python3-pip \
         python3-setuptools \
-        python-socksipychain \
+        python3-socksipychain \
+        rustc \
         ssdeep \
+        sudo \ 
         swig \
         tor \
         unrar \
         wget && \
+    # Add user for viper
+    groupadd -r viper && \
+    useradd -r -g viper -d /home/viper -s /bin/bash -c "Viper Account" viper && \
+	mkdir -p /home/viper/workdir && \
+	mkdir -p /home/viper/.viper && \
+	sed -i "s/^.*requiretty/#Defaults requiretty/" /etc/sudoers && \
+	echo "viper        ALL=(ALL)       NOPASSWD: ALL" >> /etc/sudoers && \
     # Install radare2
-    git clone https://github.com/radare/radare2 && \
+    cd /tmp && \
+    sudo --user=viper git clone https://github.com/radare/radare2 && \
     cd radare2 && \
-    ./sys/install.sh && \
+    SUDO_USER=viper ./sys/install.sh && \
     cd .. && \
     rm -rf radare2 && \
     ldconfig && \
@@ -56,11 +67,6 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
     #python3 -m pip install PrettyTable && \
     # Support for MISP
     #python3 -m pip install pymisp && \
-    # Add user for viper
-    groupadd -r viper && \
-    useradd -r -g viper -d /home/viper -s /sbin/nologin -c "Viper Account" viper && \
-	mkdir -p /home/viper/workdir && \
-	mkdir -p /home/viper/.viper && \
     cd /home/viper && \
 	ln -s /home/viper/workdir/viper.conf .viper/ && \
     git clone https://github.com/viper-framework/viper-modules.git && \
@@ -81,7 +87,9 @@ RUN sed -i -e "s/main/main non-free/" /etc/apt/sources.list && \
   	    autotools-dev \
         build-essential \
         cpp \
-        gcc && \
+        gcc \
+        rustc \
+        sudo && \
     apt autoremove -y && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
